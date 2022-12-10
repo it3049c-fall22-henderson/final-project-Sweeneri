@@ -5,12 +5,12 @@ class Bullet extends Phaser.GameObjects.Sprite{
         let ySpeed = 0;
         super(scene, xSpeed, ySpeed, "bullet");
         Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
-        this.speed = 1;
+        this.speed = 1.5;
         this.born = 0;
         this.direction = 0;
         
         this.setSize(12, 12, true);
-        this.setScale(0.8);
+        this.setScale(1.4);
     }
 
     // Fires a bullet from the player to the reticle

@@ -273,9 +273,9 @@ class Scene1 extends Phaser.Scene {
         this.background.displayWidth = config.width;
         this.background.displayHeight = config.height;
 
-      var text = this.add.text(config.width/2,config.height/2, 'Press Space (or A) to Start');
+      var text = this.add.text(config.width/2,config.height/2, 'Press Space (or A) to Start', { fontSize: 32 });
       Phaser.Display.Align.In.Center(text, this.add.zone(config.width/2,config.height/2,config.width,config.height));
-      var highScoreText = this.add.text(config.width/2,config.height/2, 'HighScore: ' + highScore);
+      var highScoreText = this.add.text(config.width/2,config.height/2, 'HighScore: ' + highScore, { fontSize: 32 });
       Phaser.Display.Align.In.TopRight(highScoreText, this.add.zone(config.width/2,config.height/2,config.width,config.height));
       var content = [
         "Instructions:",
@@ -285,7 +285,7 @@ class Scene1 extends Phaser.Scene {
         "   Press R to reload (X or SQUARE on controller)."
       ];
 
-      var instructions = this.add.text(config.width/2,config.height/2, content);
+      var instructions = this.add.text(config.width/2,config.height/2, content, { fontSize: 32 }, { fontSize: 32 });
       Phaser.Display.Align.In.BottomLeft(instructions, this.add.zone(config.width/2,config.height/2,config.width,config.height));
 
       this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -314,7 +314,7 @@ class Scene1 extends Phaser.Scene {
           { key: 'zombie15' },
           { key: 'zombie16' }
         ],
-        frameRate: 10,
+        frameRate: 15,
         repeat: -1
       });
       this.anims.create({
@@ -368,7 +368,7 @@ class Scene1 extends Phaser.Scene {
           { key: 'reload18' },
           { key: 'reload19' },
         ],
-        frameRate: 10,
+        frameRate: 20,
         repeat: 0
       });
       this.anims.create({

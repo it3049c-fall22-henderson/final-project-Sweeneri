@@ -1,7 +1,7 @@
 var gameSettings = {
-    playerSpeed: 130,
+    playerSpeed: 200,
     playerLookSpeed: 700,
-    zombieSpeed: 28,
+    zombieSpeed: 185,
     maxPowerups: 2,
     powerUpVel: 50,
     spawnTime: 1500
@@ -10,6 +10,7 @@ var gameSettings = {
   var config = {
     width: window.innerWidth - 15,
     height: window.innerHeight - 15,
+    zoom: 10,
     backgroundColor: 0x000000,
     scene: [Scene1, Scene2, Scene3],
     input: {

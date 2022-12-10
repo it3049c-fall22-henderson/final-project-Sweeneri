@@ -5,9 +5,9 @@ class Scene2 extends Phaser.Scene {
 
     create() {
         game.input.mouse.requestPointerLock();
-        music = this.sound.add('menuMusic', {volume: 0.25});
+        music = this.sound.add('menuMusic', {volume: 0.25, loop: true});
         music.play();
-        zombieSounds = this.sound.add('zombieSounds', {volume: 0.25});
+        zombieSounds = this.sound.add('zombieSounds', {volume: 0.25, loop: true});
         zombieSounds.play();
         //Adds the background image
         this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
@@ -15,11 +15,11 @@ class Scene2 extends Phaser.Scene {
         playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
         //Ammo counter HUD
         ammoScoreCounter = this.add.image(10, 10, 'status');
-        ammoScoreCounterText = this.add.text(30, 0, '');
+        ammoScoreCounterText = this.add.text(30, 0, '', { fontSize: 32 });
 
         //Creates player in center of canvas, then decreases the scale of the player
         player = this.physics.add.sprite(config.width / 2, config.height / 2, "player");
-        player.setScale(0.20).setSize(60,60);
+        player.setScale(0.60).setSize(60,60);
 
         playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
         ammoAmount = 10;
@@ -29,7 +29,7 @@ class Scene2 extends Phaser.Scene {
         pads = this.input.gamepad.gamepads;
 
         //Creates the crosshair, positioning it to the right of the player
-        this.crosshair = this.physics.add.sprite(config.width / 2 + 64, config.height / 2, "crosshair");
+        this.crosshair = this.physics.add.sprite(config.width / 2 + 64, config.height / 2, "crosshair").setScale(2.5);
 
         //Instantiates arrow keys as buttons for game. Need WASD
         this.cursorKeys = this.input.keyboard.addKeys(
@@ -139,7 +139,6 @@ class Scene2 extends Phaser.Scene {
             if (game.input.mouse.locked)
                 game.input.mouse.releasePointerLock();
                 reloading = false;
-            gameSettings.zombieSpeed = 400;
             //this.physics.add.collider(this.zombies);
             killer.setVelocity(20);
             //Fade to black
@@ -188,7 +187,7 @@ class Scene2 extends Phaser.Scene {
                     break;
             }
                 
-            var zombie = this.physics.add.sprite(xAxis, yAxis, "zombie").setSize(160,165).setOffset(75,50).setScale(0.2).play("zombieWalk").setVelocity(gameSettings.zombieSpeed);
+            var zombie = this.physics.add.sprite(xAxis, yAxis, "zombie").setSize(160,165).setOffset(75,50).setScale(0.6).play("zombieWalk").setVelocity(gameSettings.zombieSpeed);
             
             this.physics.world.enableBody(zombie);
             this.zombies.add(zombie, true);
@@ -196,7 +195,7 @@ class Scene2 extends Phaser.Scene {
     }
     zombiesMove (scene) {
         this.zombies.children.iterate(function(child){
-            scene.physics.moveToObject(child, player);
+            scene.physics.moveToObject(child, player, gameSettings.zombieSpeed);
             child.rotation = Phaser.Math.Angle.Between(child.x, child.y, player.x, player.y);
         });
     }
