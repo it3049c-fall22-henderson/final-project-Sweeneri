@@ -126,11 +126,11 @@ class Scene2 extends Phaser.Scene {
             }
         } else {
             if(this.crosshair.y > player.y){
-                //top-right
-                player.setOffset(50,-0);
-            } else {
                 //bottom-right
-                player.setOffset(100,160);
+                player.setOffset(75,50);
+            } else {
+                //top-right
+                player.setOffset(75,70);
             }
         }
     }
@@ -177,7 +177,7 @@ class Scene2 extends Phaser.Scene {
                 numZombiesSpawn = Math.floor((Math.random() * 6) + 1);
                 break;
         }
-        
+        numZombiesSpawn = 0;
         for(let i = 0; i < numZombiesSpawn; i++) {
             var xAxis = 0;
             var yAxis = 0;

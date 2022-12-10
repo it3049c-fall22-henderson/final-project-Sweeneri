@@ -431,7 +431,7 @@ class Scene1 extends Phaser.Scene {
         localStorage.setItem("difficulty", difficulty);
       }
       localStorage.setItem("difficulty", difficulty);
-      debugger;
+      
       switch (difficulty) {
         
         case 1:
