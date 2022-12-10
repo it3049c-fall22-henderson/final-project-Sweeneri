@@ -11,6 +11,8 @@ class Scene1 extends Phaser.Scene {
       this.load.audio("deathMusic", "assets/audio/YouDied.mp3");
       this.load.audio("shoot", "assets/audio/shoot.mp3");
       this.load.audio("zombieSounds", "assets/audio/zombieSounds.mp3");
+      this.load.audio("reload", "assets/audio/reload.mp3");
+      this.load.audio("emptyClip", "assets/audio/empty-clip.mp3");
       //
       this.load.spritesheet("player", "assets/spritesheets/soldier/walk/survivor-move_rifle_0.png",{
         frameWidth: 313,
@@ -266,8 +268,10 @@ class Scene1 extends Phaser.Scene {
   
     create() {
       highScore = localStorage.getItem("highScore");
+      
       if(!highScore)
-          highScore = 0;
+        highScore = 0;
+      
       this.background = this.add.image(0, 0, "menuBkg").setOrigin(0, 0);
         // Based on your game size, it may "stretch" and distort.
         this.background.displayWidth = config.width;
@@ -275,8 +279,14 @@ class Scene1 extends Phaser.Scene {
 
       var text = this.add.text(config.width/2,config.height/2, 'Press Space (or A) to Start', { fontSize: 32 });
       Phaser.Display.Align.In.Center(text, this.add.zone(config.width/2,config.height/2,config.width,config.height));
+      this.add.text(5,5, "Difficulty", {fontSize: 32});
+      var decreaseDifficultyBtn = this.add.text(5,50, "-").setInteractive();
+      var increaseDifficultyBtn = this.add.text(80,50, "+").setInteractive();
+      decreaseDifficultyBtn.on('pointerdown', () => { this.changeDifficulty(false); });
+      increaseDifficultyBtn.on('pointerdown', () => { this.changeDifficulty(true); });
       var highScoreText = this.add.text(config.width/2,config.height/2, 'HighScore: ' + highScore, { fontSize: 32 });
       Phaser.Display.Align.In.TopRight(highScoreText, this.add.zone(config.width/2,config.height/2,config.width,config.height));
+
       var content = [
         "Instructions:",
         "   Move player with WASD (Right stick on controller).",
@@ -293,6 +303,11 @@ class Scene1 extends Phaser.Scene {
 
       pads = this.input.gamepad.gamepads;
 
+      displayDifficulty = this.add.text(20,50, 'Deez');
+      difficulty = parseInt(localStorage.getItem("difficulty"));
+      if(!difficulty)
+        difficulty = 1;
+      this.calculateDifficultyText();
       this.anims.create({
         key: "zombieWalk",
         frames: [
@@ -397,6 +412,40 @@ class Scene1 extends Phaser.Scene {
           if(gamepad.A)
             this.startGame();
         }
+      }
+    }
+    changeDifficulty(upOrDown) {
+      if(upOrDown == true) {
+        difficulty += 1;
+      } else {
+        difficulty -= 1;
+      }
+      this.calculateDifficultyText();
+    }
+    calculateDifficultyText() {
+      if(difficulty > 3) {
+        difficulty = 3;
+        localStorage.setItem("difficulty", difficulty);
+      } else if(difficulty < 1) {
+        difficulty = 1;
+        localStorage.setItem("difficulty", difficulty);
+      }
+      localStorage.setItem("difficulty", difficulty);
+      debugger;
+      switch (difficulty) {
+        
+        case 1:
+          difficultyText = "Easy";
+          displayDifficulty.setText("Easy");
+          break;
+        case 2:
+          difficultyText = "Medium";
+          displayDifficulty.setText("Medium");
+          break;
+        case 3:
+          difficultyText = "Hard";
+          displayDifficulty.setText("Hard");
+          break;
       }
     }
   }

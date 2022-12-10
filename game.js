@@ -48,6 +48,9 @@ var gameSettings = {
   var highScore = null;
   var music = null;
   var zombieSounds = null;
+  var difficulty = null;
+  var difficultyText = null;
+  var displayDifficulty = null;
 
   function reloadEvent(){
     ammoScoreCounter.data.set('ammo', ammoAmount = 10);

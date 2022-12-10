@@ -164,7 +164,20 @@ class Scene2 extends Phaser.Scene {
         }
     }
     spawnZombies() {
-        var numZombiesSpawn = Math.floor((Math.random() * 6) + 1);
+        var numZombiesSpawn;
+        
+        switch (difficulty) {
+            case 1:
+                numZombiesSpawn = Math.floor((Math.random() * 3) + 1);
+                break;
+            case 2:
+                numZombiesSpawn = Math.floor((Math.random() * 4) + 1);
+                break;
+            case 3:
+                numZombiesSpawn = Math.floor((Math.random() * 6) + 1);
+                break;
+        }
+        
         for(let i = 0; i < numZombiesSpawn; i++) {
             var xAxis = 0;
             var yAxis = 0;
@@ -262,11 +275,13 @@ class Scene2 extends Phaser.Scene {
     }
 
     reloadManager(){
-        if(player.active){
+        if(player.active && !reloading){
             if(pads.length > 0){
                 for(var i = 0; i < pads.length; i++){
                     var gamepad = pads[i];
                     if(this.cursorKeys.reload.isDown || gamepad.X){
+                        let reloadSound = this.sound.add("reload", {volume: 0.50});
+                        reloadSound.play();
                         reloading = true;
                         player.play('soldierReload');
                         reloadTimer = this.time.delayedCall(1000, reloadEvent, [], this);
@@ -275,6 +290,8 @@ class Scene2 extends Phaser.Scene {
                 
             }else{
                 if(this.cursorKeys.reload.isDown){
+                    let reloadSound = this.sound.add("reload", {volume: 0.50});
+                    reloadSound.play();
                     reloading = true;
                     player.play('soldierReload');
                     reloadTimer = this.time.delayedCall(1000, reloadEvent, [], this);
@@ -285,9 +302,11 @@ class Scene2 extends Phaser.Scene {
 
     shootManager(){
         if(player.active){
-            if (player.active == false || ammoScoreCounter.data.get('ammo') == 0)
+            if (player.active == false || ammoScoreCounter.data.get('ammo') == 0) {
+                let clickSound = this.sound.add("emptyClip", {volume: 1.0});
+                clickSound.play();
                 return;
-
+            }
             if (reloading == true)
                 return;
                 
@@ -320,9 +339,11 @@ class Scene2 extends Phaser.Scene {
 
                     if(hasShot == false){
                         if(gamepad.R2 > 0.1){
-                            if (player.active == false || ammoScoreCounter.data.get('ammo') == 0)
-                            return;
-    
+                            if (player.active == false || ammoScoreCounter.data.get('ammo') == 0) {
+                                let clickSound = this.sound.add("emptyClip", {volume: 1.0});
+                                clickSound.play();
+                                return;
+                            }
                             if (reloading == true)
                             return;
                     
