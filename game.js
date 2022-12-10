@@ -20,7 +20,7 @@ var gameSettings = {
     physics: {
       default: "arcade",
       arcade:{
-          debug: true,
+          debug: false,
           debugShowVelocity: false
       }
     }

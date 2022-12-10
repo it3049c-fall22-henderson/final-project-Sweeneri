@@ -177,7 +177,7 @@ class Scene2 extends Phaser.Scene {
                 numZombiesSpawn = Math.floor((Math.random() * 6) + 1);
                 break;
         }
-        numZombiesSpawn = 0;
+        
         for(let i = 0; i < numZombiesSpawn; i++) {
             var xAxis = 0;
             var yAxis = 0;
